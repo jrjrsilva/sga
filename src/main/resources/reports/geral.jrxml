@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="geral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30bddd74-c552-4343-8af2-c83243450a0c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="nomeGuerra" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="turma" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="14" width="555" height="16" uuid="2ba4493c-512b-4fbd-8632-3733eaf4af0f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[POLÍCIA MILITAR DA BAHIA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="7" width="37" height="21" uuid="ee09af93-2fd0-49ee-9367-65a815377481"/>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="7" width="95" height="21" uuid="fe8463ab-a3bf-47da-91b8-2f918d21465f"/>
+				<text><![CDATA[Nome de Guerra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="7" width="311" height="21" uuid="975cc520-81b3-4998-9508-87f715f6c9ee"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="7" width="65" height="21" uuid="5ef5d6f1-d41f-4b65-a1c3-93a625bf395e"/>
+				<text><![CDATA[Turma]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="6" y="10" width="34" height="20" uuid="bc96309f-e2eb-4325-aae3-fb496930446b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3dc0fb7-2ffa-4a32-95cf-f6dba1c53c1b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="10" width="95" height="20" uuid="cb8bdfd0-10f9-42d0-b591-5d665933a5cc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="818704d0-cfff-4a3c-9a7e-0150b4267cf6"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeGuerra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="9" width="311" height="21" uuid="42c3bd7d-c58c-4564-88ab-952313c26bf6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a1b3514-67e7-4cb5-b793-ae93aea68787"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="9" width="65" height="21" uuid="bae03820-568f-4995-93c1-d7669934ffca">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3852ef76-e2eb-4067-be57-ed0931d1a0d9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{turma}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
