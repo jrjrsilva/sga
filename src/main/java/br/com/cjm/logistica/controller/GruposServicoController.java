@@ -1,5 +1,9 @@
 package br.com.cjm.logistica.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import br.com.cjm.logistica.model.Aluno;
 import br.com.cjm.logistica.model.GrupoServico;
 import br.com.cjm.logistica.service.GrupoServicoService;
 
@@ -22,16 +26,7 @@ public class GruposServicoController {
 	
 	@Autowired
 	private GrupoServicoService grupoServicoService;
-	
-	/*@DeleteMapping("/{id}")
-	public String remover(@PathVariable Long id, RedirectAttributes attributes) {
-		vinhos.delete(id);
 		
-		attributes.addFlashAttribute("mensagem", "Vinho removido com sucesso!");
-		
-		return "redirect:/vinhos";
-	}*/
-	
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("gruposservico/listar");
@@ -60,7 +55,16 @@ public class GruposServicoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ModelAndView editar(@PathVariable Long id) {
-		return novo(grupoServicoService.findOne(id));
+	public ModelAndView detalhe(@PathVariable Long id) {
+		GrupoServico grupo = grupoServicoService.findOne(id);
+		List<Aluno> alunos = new ArrayList<Aluno>();
+		ModelAndView modelAndView = new ModelAndView("gruposservico/detalhe");
+		alunos = grupo.getAlunos();
+		modelAndView.addObject("grupo",grupo);
+		modelAndView.addObject("alunos",alunos);
+		
+		return modelAndView;
+		
+	
 	}
 }

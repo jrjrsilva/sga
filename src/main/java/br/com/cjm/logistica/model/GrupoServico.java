@@ -28,10 +28,6 @@ public class GrupoServico implements Serializable{
 	public void setAlunos(List<Aluno> alunos) {
 		this.alunos = alunos;
 	}
-
-	/**
-	 * 
-	 */
 	
 	private static final long serialVersionUID = 1L;
 	

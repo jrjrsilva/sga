@@ -1,42 +1,36 @@
 package br.com.cjm.logistica.resource;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cjm.logistica.model.Aluno;
-import br.com.cjm.logistica.repository.Alunos;
-import br.com.cjm.logistica.service.AlunoService;
 
-@CrossOrigin("*")
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping(value="/alunos")
 public class AlunoResource {
 	
 
-	@Autowired
+	/*@Autowired
 	private Alunos alunos;
 	
 	@Autowired
 	private AlunoService alunoService;
+	*/
 	
-	@GetMapping
+	@RequestMapping(method=RequestMethod.GET)
+	public String listar() {
+		return "Rest funcioando! ";
+	}
+	
+	/*@GetMapping
 	public List<Aluno> listar() {
 		return alunos.findAll();
-	}
+	}*/
 	
-	@PostMapping
+	/*@PostMapping
 	public Aluno adicionar(@RequestBody @Valid Aluno aluno) {
 		return alunoService.adicionar(aluno);
-	}
+	}*/
 
 	/*@Autowired
 	private ApplicationContext applicationContext;
