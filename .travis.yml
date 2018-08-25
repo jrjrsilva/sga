@@ -1,1 +1,3 @@
-ECHO est  ativado.
+language: java
+jdk:
+  -oraclejkd8
