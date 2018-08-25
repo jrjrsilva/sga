@@ -6,7 +6,7 @@
 	<groupId>br.com.cjm</groupId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>log</name>
+	<name>sga</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
