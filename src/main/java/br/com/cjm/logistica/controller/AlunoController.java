@@ -40,14 +40,14 @@ public class AlunoController {
 		
 	@GetMapping("/listar")
 	public ModelAndView listar() {
-		ModelAndView modelAndView = new ModelAndView("aluno/listar");
+		ModelAndView modelAndView = new ModelAndView("/aluno/listar");
 		modelAndView.addObject("alunos", alunoService.findAll());
 		return modelAndView;
 	}
 	
 	@PostMapping("/turma")
 	public ModelAndView turma(@RequestParam("turma") String turma,@RequestParam("curso") String curso) {
-		ModelAndView modelAndView = new ModelAndView("aluno/listar");
+		ModelAndView modelAndView = new ModelAndView("/aluno/listar");
 		if(turma.equals("")) {
 			modelAndView.addObject("alunos",alunoService.findAll());
 		}else {
