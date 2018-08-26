@@ -1,10 +1,12 @@
 package br.com.cjm.logistica.config;
 
+import org.springframework.context.annotation.Configuration;
+
 /*import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 */
-//@Configuration
+@Configuration
 public class ThymeleafConfiguration {
 	/*@Bean
 	public ClassLoaderTemplateResolver  emailTemplateResolver() {
@@ -17,5 +19,5 @@ public class ThymeleafConfiguration {
 	    emailTemplateResolver.setOrder(1);
 	    return emailTemplateResolver;
 	}*/
-
+	
 }

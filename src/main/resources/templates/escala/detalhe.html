@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-padrao}">
+<head>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>
+							Escala
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+				<form method="POST" action="/aluno/turma" >
+				<input type="hidden" th:field="*{id}" id="id"/>
+						<input type="hidden" id="curso" name="curso" value="CFOAPM 2018">
+    						<a class="btn btn-secondary" th:href="@{/escala}">
+								<i class="fa fa-table"></i>
+								<span class="hidden-xs hidden-sm">Voltar</span>
+							</a>
+							
+    	</div>
+    	
+    	<div class="form-group">
+			<div calss="row">
+			  <div class="form-group col-xs-8">
+				<form method="POST" action="/aluno/turma" >
+				<input type="hidden" th:field="*{id}" id="id"/>
+				<input type="hidden" id="curso" name="curso" value="CFOAPM 2018">
+    			<label>Posto de Serviço: </label>					
+				<select name="posto">
+        				<option th:each="posto : ${postos}"
+               				 th:value="${posto.id}"
+               				 th:text="${posto.nome}" />
+   				</select>
+   				<label>Função: </label>
+				<select name="funcao">
+        				<option th:each="funcao : ${funcoes}"
+               				 th:value="${funcao.id}"
+               				 th:text="${funcao.nome}" />
+   				 </select>
+   				 <label>Número:</label>
+   				 <input type="text" id="numeroBusca" size="5">
+				<a class="btn btn-primary" th:href="@{/escala/{id}(id=${id})}">
+						<i class="fa fa-search"></i>
+						<span class="hidden-xs hidden-sm"></span>
+				</a>
+				
+			</div>
+    	</div>
+    	</div>
+    	<div class="row">
+    	 
+    	</div>
+    	
+		<div class="form-group">
+		<div class="container-fluid">
+			<form method="POST" class="form-vertical  js-form-loading"
+				th:object="${escala}" th:action="@{/escala/novo}">
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+						th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i>
+						
+						<span th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span th:text="${mensagem}">Mensagem sucesso!</span>
+					</button>
+
+					
+				</div>
+				
+				
+				
+				</div>
+				
+				<div class="col-xs-2">
+						<div class="form-group">
+							<label for="turma">Data</label>
+							<input id="turma" type="text" class="form-control" 
+								th:field="${{escala.dataInicio}}" readonly="readonly"/>
+						</div>
+					</div>
+					
+				<div class="form-group col-xs-7 table-responsive">
+				
+				<tbody>
+				<table id="tabela-grupos" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">		
+					<thead class="aw-table-header-solid">
+							<tr>
+								<th>Função</th>
+								<th>GH</th>
+								<th>Nome Guerra</th>
+								<th>Nome</th>
+								<th>Nº</th>
+								<th>Turma</th>
+							</tr>
+						</thead>
+					<tr th:each="int : ${integrantes}">
+						<td th:text="${int.posto.nome}" >
+							</td>
+						<td>AL OF PM</td>
+						<td th:text="${int.aluno.nomeGuerra}" >
+							</td>
+						<td th:text="${int.aluno.nome}" >
+							</td>
+						<td	th:text="${int.aluno.numero}" >
+							</td>
+						
+						<td th:text="${int.aluno.turma}" >
+							</td>				
+						</tr>
+							<tr th:if="${integrantes.empty}">
+								<td colspan="4">Nenhum aluno escalado</td>
+							</tr>
+					</table>
+					
+				<table id="tabela-pav-a" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<caption>Sentinela do Pavilhão A</caption>
+					<thead class="aw-table-header-solid">
+							<tr>
+								<th>Posto</th>
+								<th>GH</th>
+								<th>Nome Guerra</th>
+								<th>Nome</th>
+								<th>Nº</th>
+								<th>Turma</th>
+							</tr>
+						</thead>
+					<tr th:each="intA : ${integrantesPavA}">
+						<td th:text="${intA.funcao.nome}" >
+							</td>
+						<td>AL OF PM</td>
+						<td th:text="${intA.aluno.nomeGuerra}" >
+							</td>
+						<td th:text="${intA.aluno.nome}" >
+							</td>
+						<td	th:text="${intA.aluno.numero}" >
+							</td>
+						
+						<td th:text="${intA.aluno.turma}" >
+							</td>				
+						</tr>
+							<tr th:if="${integrantes.empty}">
+								<td colspan="4">Nenhum aluno escalado</td>
+							</tr>
+					</table>
+					
+				<table id="tabela-pav-b" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<caption>Plantão do Pavilhão B1 Térreo</caption>
+					<thead class="aw-table-header-solid">
+							<tr>
+								<th>Posto</th>
+								<th>GH</th>
+								<th>Nome Guerra</th>
+								<th>Nome</th>
+								<th>Nº</th>
+								<th>Turma</th>
+							</tr>
+						</thead>
+					<tr th:each="intB : ${integrantesPavB}">
+						<td th:text="${intB.funcao.nome}" >
+							</td>
+						<td>AL OF PM</td>
+						<td th:text="${intB.aluno.nomeGuerra}" >
+							</td>
+						<td th:text="${intB.aluno.nome}" >
+							</td>
+						<td	th:text="${intB.aluno.numero}" >
+							</td>
+						
+						<td th:text="${intB.aluno.turma}" >
+							</td>				
+						</tr>
+							<tr th:if="${integrantes.empty}">
+								<td colspan="4">Nenhum aluno escalado</td>
+							</tr>
+					</table>
+			
+				<table id="tabela-pav-d" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<caption>Plantão do Pavilhão D</caption>
+					<thead class="aw-table-header-solid">
+							<tr>
+								<th>Posto</th>
+								<th>GH</th>
+								<th>Nome Guerra</th>
+								<th>Nome</th>
+								<th>Nº</th>
+								<th>Turma</th>
+							</tr>
+						</thead>
+					<tr th:each="intD : ${integrantesPavD}">
+						<td th:text="${intD.funcao.nome}" >
+							</td>
+						<td>AL OF PM</td>
+						<td th:text="${intD.aluno.nomeGuerra}" >
+							</td>
+						<td th:text="${intD.aluno.nome}" >
+							</td>
+						<td	th:text="${intD.aluno.numero}" >
+							</td>
+						
+						<td th:text="${intD.aluno.turma}" >
+							</td>				
+						</tr>
+							<tr th:if="${integrantes.empty}">
+								<td colspan="4">Nenhum aluno escalado</td>
+							</tr>
+					</table>
+					
+				
+				<table id="tabela-pav-r" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+					<caption>Reservas do Serviço</caption>
+					<thead class="aw-table-header-solid">
+						<tr>
+							<th>GH</th>
+							<th>Nome Guerra</th>
+							<th>Nome</th>
+							<th>Nº</th>
+							<th>Turma</th>
+						</tr>
+					</thead>
+					<tr th:each="intR : ${integrantesPavR}">
+						<td>AL OF PM</td>
+						<td th:text="${intR.aluno.nomeGuerra}" >
+							</td>
+						<td th:text="${intR.aluno.nome}" >
+							</td>
+						<td	th:text="${intR.aluno.numero}" >
+							</td>	
+						<td th:text="${intR.aluno.turma}" >
+							</td>				
+						</tr>
+							<tr th:if="${integrantes.empty}">
+								<td colspan="4">Nenhum aluno escalado</td>
+							</tr>
+					</table>
+					
+				</tbody>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

@@ -28,6 +28,46 @@ public class Integrante implements Serializable {
 	@JoinColumn(name="aluno_id")
 	private Aluno aluno; 
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public Escala getEscala() {
+		return escala;
+	}
+
+	public void setEscala(Escala escala) {
+		this.escala = escala;
+	}
+
+	public Funcao getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(Funcao funcao) {
+		this.funcao = funcao;
+	}
+
+	public Posto getPosto() {
+		return posto;
+	}
+
+	public void setPosto(Posto posto) {
+		this.posto = posto;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="escala_id")
 	private Escala escala;

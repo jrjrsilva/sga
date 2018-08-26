@@ -117,15 +117,13 @@ public class AlunoController {
 			return novo(aluno);
 		}
 		Aluno al = this.alunoService.findOne(aluno.getId());
-		aluno.setSexo(al.getSexo());
-		aluno.setCodgrauhierarquico(al.getCodgrauhierarquico());
-		aluno.setCodopm(al.getCodopm());
-		aluno.setGrauhierarquico(al.getGrauhierarquico());
-		aluno.setOpm(al.getOpm());
-		aluno.setNascimento(al.getNascimento());
-		aluno.setAdmissao(al.getAdmissao());
-		aluno.setCurso(al.getCurso());
-		this.alunoService.salvar(aluno);
+	
+		al.setTelefone(aluno.getTelefone());
+		al.setEmail(aluno.getEmail());
+		al.setDdd(aluno.getDdd());
+		al.setEndereco(aluno.getEndereco());
+		al.setNomeGuerra(aluno.getNomeGuerra());
+		this.alunoService.salvar(al);
 		
 		attributes.addFlashAttribute("mensagem", "salvo com sucesso!");
 		

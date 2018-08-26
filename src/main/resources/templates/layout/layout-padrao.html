@@ -54,16 +54,21 @@
 
 								<span>Grupos de Serviço</span>
 							</a>
+							<!-- <a th:href="@{/postoservico/listar}">
+								<i class="fa  fa-fw  fa-table"></i>
+
+								<span>Postos de Serviço</span>
+							</a> -->
 							<a th:href="@{/aluno/listar}">
 								<i class="fa  fa-fw  fa-table"></i>
 
 								<span>Turmas</span>
 							</a>
-							<!-- <a th:href="@{/escala/listar}">
+							<a th:href="@{/escala}">
 								<i class="fa  fa-fw  fa-table"></i>
 
 								<span>Escalas</span>
-							</a> -->
+							</a>
 						</li>
 						
 				<!-- 		<li class="aw-menu__item">
@@ -87,16 +92,11 @@
 			</div>
 		</aside>
 
-		<section class="aw-layout-content  js-content"
-			layout:fragment="conteudo">
+		<section class="aw-layout-content  js-content"	layout:fragment="conteudo">
 			Aqui!	
 		</section>
 
-		<footer class="aw-layout-footer  js-content">
-			<div class="container-fluid">
-				<span class="aw-footer-disclaimer">&copy;</span>
-			</div>
-		</footer>
+		
 	</div>
 
 	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>

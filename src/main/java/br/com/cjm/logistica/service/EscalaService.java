@@ -1,18 +1,12 @@
 package br.com.cjm.logistica.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.cjm.logistica.model.Aluno;
 import br.com.cjm.logistica.model.Escala;
 import br.com.cjm.logistica.repository.Escalas;
-
-
 
 @Service
 public class EscalaService {
@@ -32,6 +26,11 @@ public class EscalaService {
 	public List<Escala> findAll() {
 		// TODO Auto-generated method stub
 		return this.escalas.findAll();
+	}
+
+	public List<Escala> listDescendente() {
+		// TODO Auto-generated method stub
+		return this.escalas.listDescendente();
 	}
 	
 }

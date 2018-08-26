@@ -30,6 +30,10 @@ public class AlunoService {
 		return this.alunos.findByMatricula(matricula);
 	}
 	
+	public Aluno findByNumero(Integer numero){
+		return this.alunos.findByNumero(numero);
+	}
+	
     public List<Aluno> obterPorTurmaCurso(String turma, String curso){
     	return this.alunos.obterPorTurmaCurso(turma, curso);
     }
@@ -39,12 +43,10 @@ public class AlunoService {
 	}
 
 	public List<Aluno> findAll() {
-		// TODO Auto-generated method stub
 		return this.alunos.findAll();
 	}
 
 	public Aluno findOne(Long id) {
-		// TODO Auto-generated method stub
 		return this.alunos.findOne(id);
 	}
 	

@@ -48,7 +48,18 @@ public class Escala implements Serializable{
 	@OneToOne
 	private TipoServico tipoServico;
 	
+	@OneToOne
+	private GrupoServico grupoServico;
 	
+		
+	public GrupoServico getGrupoServico() {
+		return grupoServico;
+	}
+
+	public void setGrupoServico(GrupoServico grupoServico) {
+		this.grupoServico = grupoServico;
+	}
+
 	public List<Posto> getPostos() {
 		return postos;
 	}

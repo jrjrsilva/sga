@@ -12,6 +12,8 @@ import br.com.cjm.logistica.model.Aluno;
 public interface Alunos extends JpaRepository<Aluno, Long> {
 
 	Aluno findByMatricula(String matricula);
+	
+	Aluno findByNumero(Integer numero);
 
 	List<Aluno> findByNomeGuerra(String nomeGuerra);
 	
