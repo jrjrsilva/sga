@@ -56,6 +56,11 @@ public class Integrante implements Serializable {
 		return funcao;
 	}
 
+	public Integrante() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setFuncao(Funcao funcao) {
 		this.funcao = funcao;
 	}

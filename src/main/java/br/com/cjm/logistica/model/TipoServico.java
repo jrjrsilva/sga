@@ -22,6 +22,11 @@ public class TipoServico implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public TipoServico() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

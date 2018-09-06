@@ -21,12 +21,10 @@ public class AlunoService {
 	
 	
 	public void salvar(Aluno aluno){
-		
 		this.alunos.save(aluno);
 	}
 	
 	public Aluno buscar(String matricula){
-		
 		return this.alunos.findByMatricula(matricula);
 	}
 	
@@ -48,13 +46,18 @@ public class AlunoService {
 
 	public Aluno findOne(Long id) {
 		return this.alunos.findOne(id);
-	}
-	
-	
+	}	
 	
 	public List<Map<String, Object>> report(){
 		List<Map<String, Object>> result = new ArrayList<Map<String , Object>>();
-		for(Aluno aluno : this.alunos.findAll()) {
+		List<Aluno> lista = new ArrayList<Aluno>();
+	//	if(turma.equals("")) {
+			lista = this.alunos.findAll();
+	/*	}else {
+			lista = this.alunos.findByTurma(turma);
+		}*/
+		
+		for(Aluno aluno : lista) {
 			Map<String, Object> item = new HashMap<String, Object>();
 			item.put("numero", aluno.getNumero());
 			item.put("nomeGuerra", aluno.getNomeGuerra());
@@ -62,13 +65,13 @@ public class AlunoService {
 			item.put("turma", aluno.getTurma());
 			result.add(item);
 		}
+		
 		return result;
 	}
 	
 	public List<String> matriculas(){
 		List<String> result = new ArrayList<String>();
-		for(Aluno aluno : this.alunos.findAll()) {
-			
+		for(Aluno aluno : this.alunos.findAll()) {	
 			result.add(aluno.getMatricula());
 		}
 		return result;

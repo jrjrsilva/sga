@@ -86,6 +86,14 @@ public class Aluno implements Serializable{
 	@ManyToMany(mappedBy="alunos")
 	private List<GrupoServico> gruposServico;
 			
+	public Aluno(Long aluno) {
+		this.id = aluno;
+	}
+
+	public Aluno() {
+		
+	}
+
 	public Integer getTempoServico() {
 		LocalDate dataAtual = LocalDate.now();
 		String d = this.getNascimento().toString(); 
@@ -281,6 +289,31 @@ public class Aluno implements Serializable{
 	}
 	public void setDtadmissao(String dtadmissao) {
 		this.dtadmissao = dtadmissao;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aluno other = (Aluno) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

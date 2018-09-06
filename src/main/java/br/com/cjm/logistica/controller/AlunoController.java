@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import br.com.cjm.logistica.model.Aluno;
 import br.com.cjm.logistica.service.AlunoService;
 import br.com.cjm.logistica.service.GrupoServicoService;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 
 @Controller
 @RequestMapping("/aluno")
@@ -81,12 +82,6 @@ public class AlunoController {
 	@GetMapping("/grupos/novo/{id}/{grupo}")
 	public ModelAndView gruposAdd(@PathVariable Long id, @PathVariable Long grupo) {
 		ModelAndView modelAndView = new ModelAndView("aluno/grupos");
-		System.out.println("oi");
-		/*Aluno aluno = alunoService.findOne(id);
-		modelAndView.addObject(aluno);
-		System.out.println(grupo);
-		System.out.println(id);
-		modelAndView.addObject("grupos",grupoService.findAll());*/
 		return modelAndView;
 	}
 	
@@ -98,17 +93,36 @@ public class AlunoController {
 	@RequestMapping(value="report", method = RequestMethod.GET)
 	public ModelAndView report(RedirectAttributes attributes){
 		JasperReportsPdfView view = new JasperReportsPdfView();
+		//JRDocxExporter view = new JRDocxExporter();
 		view.setUrl("classpath:/reports/geral.jrxml");
 		view.setApplicationContext(applicationContext);
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("datasource", alunoService.report());
+		//if(turma.equals(""))
+			params.put("datasource", alunoService.report());
 		
 		attributes.addFlashAttribute("mensagem", "salvo com sucesso!");
 		
 		return new ModelAndView(view, params);
 		
 	}
+	
+	/*@RequestMapping(value="report", method = RequestMethod.GET)
+	public ModelAndView report(RedirectAttributes attributes,@RequestParam("turma") String turma){
+		JasperReportsPdfView view = new JasperReportsPdfView();
+		//JRDocxExporter view = new JRDocxExporter();
+		view.setUrl("classpath:/reports/geral.jrxml");
+		view.setApplicationContext(applicationContext);
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		if(turma.equals(""))
+			params.put("datasource", alunoService.report(turma));
+		
+		attributes.addFlashAttribute("mensagem", "salvo com sucesso!");
+		
+		return new ModelAndView(view, params);
+		
+	}*/
 
 	@PostMapping("/novo")
 	public ModelAndView salvar(@Valid Aluno aluno, BindingResult result,

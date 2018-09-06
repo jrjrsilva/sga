@@ -29,6 +29,15 @@ public class Funcao implements Serializable{
 	private String descricao;
 	
 
+	public Funcao(Long funcao) {
+		this.id = funcao;
+	}
+
+	public Funcao() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

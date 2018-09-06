@@ -13,19 +13,54 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="49" splitType="Stretch">
+		<band height="91" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="14" width="555" height="16" uuid="2ba4493c-512b-4fbd-8632-3733eaf4af0f"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="0" y="4" width="555" height="26" uuid="2ba4493c-512b-4fbd-8632-3733eaf4af0f"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
 				<text><![CDATA[POLÍCIA MILITAR DA BAHIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="555" height="20" uuid="c2c467e7-d789-4c71-9694-58d71fb0a108"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[ACADEMIA DE POLÍCIA MILITAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="48" width="555" height="20" uuid="b8e17293-b55c-45a7-a7d3-b5c9d1c9e42e"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[CORPO DE ALUNO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="0" width="131" height="91" uuid="f69a77ad-a9f2-4fef-85d5-090a3126199a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="9" y="10" width="71" height="16" uuid="b87588c6-98db-48a5-90b4-2d68d3c9229d"/>
+				<text><![CDATA[Publique-se]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="27" width="71" height="16" uuid="7198fd35-8ccf-4bad-b368-0721071f9e7d"/>
+				<text><![CDATA[Em __/__/___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="51" width="108" height="16" uuid="39240fe0-d7a4-4877-ab5f-008d5e7a68db"/>
+				<text><![CDATA[______________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="66" width="71" height="16" uuid="199f5b4d-ea7f-416d-a93c-5a2d55aea360"/>
+				<text><![CDATA[Chefe do CA]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="15" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="39" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<staticText>
 				<reportElement x="3" y="7" width="37" height="21" uuid="ee09af93-2fd0-49ee-9367-65a815377481"/>
 				<text><![CDATA[Nº]]></text>
@@ -45,27 +80,27 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="6" y="10" width="34" height="20" uuid="bc96309f-e2eb-4325-aae3-fb496930446b">
+				<reportElement x="6" y="4" width="34" height="20" uuid="bc96309f-e2eb-4325-aae3-fb496930446b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3dc0fb7-2ffa-4a32-95cf-f6dba1c53c1b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="55" y="10" width="95" height="20" uuid="cb8bdfd0-10f9-42d0-b591-5d665933a5cc">
+				<reportElement x="55" y="4" width="95" height="20" uuid="cb8bdfd0-10f9-42d0-b591-5d665933a5cc">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="818704d0-cfff-4a3c-9a7e-0150b4267cf6"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nomeGuerra}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="169" y="9" width="311" height="21" uuid="42c3bd7d-c58c-4564-88ab-952313c26bf6">
+				<reportElement x="169" y="3" width="311" height="21" uuid="42c3bd7d-c58c-4564-88ab-952313c26bf6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a1b3514-67e7-4cb5-b793-ae93aea68787"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="490" y="9" width="65" height="21" uuid="bae03820-568f-4995-93c1-d7669934ffca">
+				<reportElement x="490" y="3" width="65" height="21" uuid="bae03820-568f-4995-93c1-d7669934ffca">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3852ef76-e2eb-4067-be57-ed0931d1a0d9"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{turma}]]></textFieldExpression>
@@ -73,10 +108,21 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="15" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="368" y="4" width="100" height="30" uuid="0d974f22-9e7e-4a89-95f3-91d3cedf6200"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="468" y="4" width="100" height="30" uuid="92a632e6-7c6e-423c-8f7e-fc194589b127"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

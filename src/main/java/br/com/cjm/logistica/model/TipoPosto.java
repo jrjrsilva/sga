@@ -14,6 +14,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tipoposto")
 public class TipoPosto implements Serializable{
 
+	public TipoPosto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 
 	 */

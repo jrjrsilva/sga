@@ -40,8 +40,17 @@ public class Posto implements Serializable {
 	private List<TipoServico> tiposServico;
 	
 	
+	public Posto(Long posto) {
+		this.id = posto;
+	}
+
 	public Long getId() {
 		return id;
+	}
+
+	public Posto() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public void setId(Long id) {

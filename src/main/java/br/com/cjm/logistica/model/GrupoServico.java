@@ -21,6 +21,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="gruposervico")
 public class GrupoServico implements Serializable{
 
+	public GrupoServico() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<Aluno> getAlunos() {
 		return alunos;
 	}

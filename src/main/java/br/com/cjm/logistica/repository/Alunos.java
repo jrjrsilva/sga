@@ -20,4 +20,6 @@ public interface Alunos extends JpaRepository<Aluno, Long> {
 	@Query("from Aluno s where  s.turma = :turma and s.curso = :curso")
     public List<Aluno> obterPorTurmaCurso(@Param("turma") String turma, @Param("curso") String curso);
 
+	List<Aluno> findByTurma(String turma);
+
 }
