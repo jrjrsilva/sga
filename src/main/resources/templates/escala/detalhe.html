@@ -110,7 +110,7 @@ $("#posto").on("change", function (e) {
 					<div class="form-group">
 						<label for="turma">Data</label>
 						<div> 
-							<td th:text="${#dates.format(escala.dataInicio, 'dd/MM/yyyy')}"</td>
+							<td th:text="${#dates.format(escala.dataInicio, 'dd/MM/yyyy')}"></td>
 						</div>
 						<label for="grupoServico">Grupo</label>
 						<input type="hidden" id="grupoServicoId" value="${escala.grupoServico.id}" />

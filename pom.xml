@@ -26,17 +26,13 @@
   </properties>
 
 	<dependencies>
-		<dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>2.2.4</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.7</version>
-        </dependency>
+
+	<dependency>
+		<groupId>io.github.jpenren</groupId>
+		<artifactId>thymeleaf-spring-data-dialect</artifactId>
+		<version>3.4.0</version>
+	</dependency>
 	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -189,6 +185,20 @@
 	 <artifactId>thymeleaf-extras-java8time</artifactId>
 	 <version>3.0.0.RELEASE</version>
 	</dependency>
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>jquery</artifactId>
+		<version>3.3.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>bootstrap</artifactId>
+		<version>4.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-cassandra</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>
@@ -206,7 +216,7 @@
 	</build>
 
 
-	<artifactId>gerencial</artifactId>
-	<description>Logistica Gerencial</description>
+	<artifactId>sisapm</artifactId>
+	<description>Gestão Escolar - APM</description>
 	<packaging>war</packaging>
 </project>
