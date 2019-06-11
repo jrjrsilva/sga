@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-padrao}">
+<head>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>Cadastro de Nota do Aluno --- Primeiro semestre</h1>
+					</div>
+
+					<div class="col-xs-4">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-primary" th:href="@{/notas}">
+							 <i class="fa fa-table"></i> <span class="hidden-xs hidden-sm">Listagem</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+
+		<form method="POST" class="form-vertical  js-form-loading"
+				th:object="${nota}" th:action="@{/notas/novo}" >
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+					th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i> <span
+							th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+						sucesso!</span>
+				</div>
+
+				<input type="hidden" th:field="*{codNota}" />
+				<div class="row">
+					<div class="col-sm-4 ">
+						<label for="nome">Nome</label> <input id="nome"
+							class="form-control" th:field="*{aluno.alunoNome}"
+							readonly="readonly" />
+					</div>
+
+
+					<div class="col-sm-1 ">
+						<div class="form-group">
+							<label for="vC11Sem">VC1</label> <input id="vC11Sem" step="any" min="0" max="10"
+								type="number" class="form-control" th:field="*{vC11Sem}" />
+
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="vC21Sem">VC2</label> <input id="vC21Sem" step="any" min="0" max="10"
+								type="number" class="form-control" th:field="*{vC21Sem}" />
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="vF1Sem">VF</label> <input id="vF1Sem" type="number" step="any" min="0" max="10"
+								class="form-control" th:field="*{vF1Sem}" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="medPar1Sem">MP</label> <input id="medPar1Sem"
+								type="text" class="form-control" th:field="*{medPar1Sem}"
+								readonly="readonly" />
+						</div>
+					</div>
+
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="medFin1Sem">MF</label> <input id="medFin1Sem"
+								type="text" class="form-control" th:field="*{medFin1Sem}"
+								readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="rec1Sem">Recup</label> <input id="rec1Sem"
+								type="text" class="form-control" th:field="*{rec1Sem}" />
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="cons1Sem">Cons</label> <input id="cons1Sem"
+								type="text" class="form-control" th:field="*{cons1Sem}" />
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="res1Sem">Resultado</label> <input id="res1Sem"
+								type="text" class="form-control" th:field="*{res1Sem}"
+								readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group">
+							<label for="resSituacao">Situação</label> <input id="resSituacao"
+								type="text" class="form-control" th:field="*{resSituacao}"
+								readonly="readonly" />
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<button class="btn  btn-primary" type="submit">Salvar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		</div>
+	</section>
+</body>
+</html>

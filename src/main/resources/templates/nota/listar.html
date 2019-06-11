@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:sd="http://www.thymeleaf.org/spring-data"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-padrao}">
+<head>
+<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/lista-vinhos.css}" />
+
+<script type="text/javascript">
+
+function carregarTurmas(){
+	var urls = window.location.href;
+	$.ajax({
+		type	: "GET",
+		url : urls+"/turmas",
+		data	: {
+			anoTurma: $('#anoTurma').val(),
+		},
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(dataJson){
+			$("select[name=turma]").empty();
+			$("select[name=turma]").append("<option value=''>--Selecione--</option>");
+			$.each(dataJson, function(index, item){
+				$("select[name=turma]").append(
+						"<option value=" + item.codTurma + ">" + item.descricao + "</option>");
+			});
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+}
+
+function carregarDisciplinas(){
+	var urls = window.location.href;
+	$.ajax({
+		type	: "GET",
+		url : urls+"/disciplinas",
+		data	: {
+			codTurma: $('#turma').val(),
+			semestre: $('#semestre').val()
+		},
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(dataJson){
+			$("select[name=disciplina]").empty();
+			$("select[name=disciplina]").append("<option value=''>--Selecione--</option>");
+			$.each(dataJson, function(index, item){
+				$("select[name=disciplina]").append(
+						"<option value=" + item.codDisciplina + ">" + item.disciplinaNome + "</option>");
+			});
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+}
+
+function filtrar(){
+	var urls = window.location.href;
+		$.ajax({
+			type	: "GET",
+			url : urls+"/listagem",
+			contentType : "charset=utf-8",
+			data	: {
+				semestre: $('#semestre').val(),
+				turma: $('#turma').val(),
+				disciplina: $('#disciplina').val()
+			},
+			success : function(resultado){
+				$('#retorno').html(resultado);				
+			},
+			error : function(e){
+				console.log(e);
+			}
+	});
+}
+
+function limpar(){
+	$("select[name=disciplina]").empty();
+	$('#retorno').html("");
+}
+
+</script>
+
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>Listagem de notas por turma</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="container-fluid">
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+						sucesso!</span>
+				</div>
+  				<form th:action="@{/notas/notas}" method="get">
+				<div class="row">
+				<div class="col-xs-2">
+				<div class="form-group">
+				<span>Ano</span>
+				<select name="anoTurma" id="anoTurma" onChange="carregarTurmas(); limpar()">
+        				<option value="">--- Selecione --</option>
+        				<option th:each="ano : ${anos}"
+               				 th:value="${ano}"
+               				 th:text="${ano}" />
+   				 </select>
+				</div></div>
+				<div class="col-xs-2">
+				<div class="form-group">
+				<span>Semestre</span>
+				<select name="semestre" id="semestre" onChange="limpar()">
+        				<option value="">--Selecione--</option>
+        				<option value="1">1º Semestre</option>
+        				<option value="2">2º Semestre</option>
+   				 </select>
+				</div></div>
+				<div class="col-xs-2">
+				<div class="form-group">
+				<span>Turma</span>
+				<select name="turma" id="turma" onChange="carregarDisciplinas()">
+        				<option th:each="turma : ${turmas}"
+               				 th:value="${turma.codTurma}"
+               				 th:text="${turma.descricao}" />
+   				 </select>
+				</div></div>
+				<div class="col-xs-12">
+				<div class="form-group">
+					<span>Disciplina</span>
+				 <select name="disciplina" id="disciplina" onChange="filtrar()">
+        				<option th:each="disciplina : ${disciplinas}"
+               				 th:value="${disciplina.codDisciplina}"
+               				 th:text="${disciplina.disciplinaNome}" />
+   				 </select>
+				</div>
+				</div>
+				
+			</div>
+			</form>	
+			<div id="retorno">
+			
+			</div>
+	
+			</div>
+	</section>
+</body>
+</html>

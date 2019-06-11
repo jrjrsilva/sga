@@ -1,0 +1,116 @@
+<script>
+	$('.gravar').click(function(){
+		var urls = window.location.href;
+		$.ajax({
+			type	: "POST",
+			url : urls+"/notas/nova",
+			data	: {
+				codNota: $('#id').val(),
+				semestre: $('#semestre').val(),
+				vc1: $('#vc1').val(),
+				vc2: $('#vc2').val(),
+				vf1: $('#vf1').val(),
+				cons1: $('#cons1').val(),
+				rec1: $('#rec1').val(),
+			},
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(){
+				console.log('gravado com sucesso!');
+			};
+			error : function(e){
+				console.log(e);
+			}
+		});
+	});
+
+
+$(document).ready(function(){
+	$('#tbl tbody tr td.editavel').dblclick(function(){
+		if($('td > input').length > 0 ){
+			return;
+		}
+		var conteudoOriginal = $(this).text();
+		var novoElemento =  $('<input />', {type: 'text', value: conteudoOriginal});
+		$(this).html(novoElemento.bind('blur keydown',function(e){
+			var keyCode = e.which;
+			var conteudoNovo = $(this).val();
+			if(keyCode == 13 && conteudoNovo != '' &&  conteudoNovo != conteudoOriginal){
+				var objeto = $(this);
+				$.ajax({
+					type:"POST",
+					url:"notas/nova",
+					data:{
+						codNota:$(this).parents('tr').chidren().first().text(),
+						campo:$(this).parent().attr('title'),
+						valor:conteudoNovo
+					}
+				success:function(result){
+					objeto.parent().html(conteudoNovo);
+					$('body').append(result);
+				}
+				})
+			}else 
+			if(keyCode == 27 || e.type == "blur"){
+				$(this).parent().html(conteudoOriginal);
+			}
+		}));
+		$(this).children().select();
+	})
+})
+</script>
+
+
+<script>
+$(document).ready(function(){
+	$('#tbl tbody tr td.editavel').dblclick(function(){
+		if($('td > input').length > 0 ){
+			return;
+		}
+		var conteudoOriginal = $(this).text();
+		var novoElemento =  $('<input />', {type: 'text', value: conteudoOriginal});
+		$(this).html(novoElemento.bind('blur keydown',function(e){
+			var keyCode = e.which;
+			var conteudoNovo = $(this).val();
+			if(keyCode == 13 && conteudoNovo != '' && conteudoNovo != conteudoOriginal){
+				var objeto = $(this);
+				$.ajax({
+					type:"POST",
+					url:"notas/nova",
+					data:{
+						codNota:$(this).parents('tr').chidren().first().text(),
+						campo:$(this).parent().attr('title'),
+						valor:conteudoNovo
+					}
+				success:function(result){
+					objeto.parent().html(conteudoNovo);
+					$('body').append(result);
+				}
+				})
+				
+			}else if (keyCode == 27 || e.type == 'blur')
+				$(this).parent().html(conteudoOriginal);
+			
+		}));
+		$(this).children().select();
+	})
+})
+</script>
+
+
+$(function(){
+	$('#anoTurma').change(
+			$.getJSON("http://localhost:8080/notas/turmas", {
+	            anoTurma : $("option:selected", this).val(),
+	            ajax : 'true'
+	        }, function(data) {
+	            var html = '<option value="">--Selecione--</option>';
+	            var len = data.length;
+	            for ( var i = 0; i < len; i++) {
+	                html += '<option value="' + data[i].codTurma + '">'
+	                        + data[i].descricao + '</option>';
+	            }
+	            html += '</option>';
+	            $('#turma').html(html);
+	        }))
+	});

@@ -1,0 +1,140 @@
+<style>
+<!--
+.editavel{
+	padding: 1px;
+}
+-->
+</style>
+<script>
+$(document).ready(function(){
+	$('.btnAdicionar').on('click', function(event){
+		event.preventDefault();
+		var href = $(this).attr('href');
+		
+		$.get(href, function(nota,status){
+			$('.add-form #nome').val(nota.nomeAluno);
+		});
+	})
+});
+</script>
+
+<div class="table-responsive">
+	<div>
+		lalala
+	</div>
+	<table id="tbl"
+		class="table table-striped table-hover table-bordered table-responsive">
+		<caption>Primeiro Semestre</caption>
+		<thead>
+			<tr>
+				<th><a class="sorted" sd:pagination-sort="">Aluno</a></th>
+				<th>VC1</th>
+				<th>VC2</th>
+				<th>VF</th>
+				<th>M Parcial</th>
+				<th>M Final</th>
+				<th>Rec</th>
+				<th>Cons</th>
+				<th>Resultado</th>
+				<th>Situa&ccedil;&atilde;o</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="row : ${page}">
+				<td th:text="${row.aluno.alunoNome}">Nome
+				</th>
+				<td class="editavel" title="vc1" th:text="${row.vC11Sem}">VC 1</td>
+				<td class="editavel" title="vc2" th:text="${row.vC21Sem}">VC 2</td>
+				<td class="editavel" title="vf1" th:text="${row.vF1Sem}">VF</td>
+				<td th:text="${row.medPar1Sem}">MEDIA PARCIAL</td>
+				<td th:text="${row.medFin1Sem}">Last Name</td>
+				<td class="editavel" title="rec1" th:text="${row.rec1Sem}">Last Name</td>
+				<td class="editavel" title="cons1" th:text="${row.cons1Sem}">Last Name</td>
+				<td th:text="${row.res1Sem}">Last Name</td>
+				<td th:text="${row.resSituacao}">Last Name</td>
+				<td>
+				<button id="btnAdicionar" class="btn btn-primary" data-toggle="modal"
+						data-cod="${row.codNota}"
+						data-target="#myModal">+</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Adicionar nota</h4>
+					</div>
+					
+				<div class="modal-body">
+
+						<form class="form-horizontal" id="add-form" >
+
+							<input type="hidden" name="codNota" id="codNota" /> 
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="nome">Nome</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" 
+										name="nome" id="nome" readonly="readonly"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vc1">Primeira VC</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"
+										placeholder="Nota VC 1" name="vc1" id="vc1" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vc2">Segunda VC</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"
+										placeholder="Nota VC 2" name="vc2" id="vc2" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vf1">Verificação Final</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"
+										placeholder="Nota VF" name="vf1" id="vf1" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="rec">Recuperação</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"
+										placeholder="Nota Rec" name="rec" id="rec" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="cons">Conselho</label>
+								<div class="col-sm-1">
+									<input type="text" class="form-control"
+										placeholder="Nota Cons" name="cons" id="cons" />
+								</div>
+							</div>
+						</form>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+						<button id="btnSubmitForm" type="button" class="btn btn-primary" onclick="submeterForm();">Salvar</button>
+					</div>
+			</div>
+			</div>
+			</div>
+			
+<!-- Fim Modal -->

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout-padrao}">
+<head>
+
+<script type="text/javascript">
+
+function carregarTurmas(){
+	$.ajax({
+		type	: "GET",
+		url : "/notas/turmas",
+		data	: {
+			anoTurma: $('#anoTurma').val(),
+		},
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(dataJson){
+			$("select[name=turma]").empty();
+			$("select[name=turma]").append("<option value=''>--Selecione--</option>");
+			$.each(dataJson, function(index, item){
+				$("select[name=turma]").append(
+						"<option value=" + item.codTurma + ">" + item.descricao + "</option>");
+			});
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+}
+
+function filtrar() {
+
+	$.ajax({
+		type : "GET",
+		url : "/grades/listagem",
+		contentType : "charset=utf-8",
+		data : {
+			semestre : $('#semestre').val(),
+			turma : $('#turma').val()
+		},
+		success : function(resultado) {
+			$('#retorno').html(resultado);
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+
+
+function limpar() {
+	$('#retorno').html("");
+}
+
+</script>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>
+							Incluir disciplina na turma
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+
+			<form method="POST" class="form-vertical  js-form-loading"
+				th:object="${grade}" th:action="@{/grades/novo}">
+				<div class="alert  alert-danger  alert-dismissible" role="alert"
+					th:if="${#fields.hasAnyErrors()}">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<div th:each="erro: ${#fields.detailedErrors()}">
+						<i class="fa fa-exclamation-circle"></i>
+						
+						<span th:text="${erro.message}">Mensagem erro.</span>
+					</div>
+				</div>
+
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i>
+
+					<span th:text="${mensagem}">Mensagem sucesso!</span>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+					<div class="form-group">
+						<label for="nome">Ano</label>
+						 <select name="anoTurma" id="anoTurma" onChange="carregarTurmas(); limpar()">
+        				<option value="">--- Selecione --</option>
+        				<option th:each="ano : ${anos}"
+               				 th:value="${ano}"
+               				 th:text="${ano}" />
+   				 		</select>
+					</div>	
+				</div>
+			
+					<div class="col-sm-4">
+					<div class="form-group">
+						<label for="nome">Semestre</label>
+						 <select name="semestre" id="semestre" onChange="limpar()">
+        					<option value="">--Selecione--</option>
+        					<option value="1">1º Semestre</option>
+        					<option value="2">2º Semestre</option>
+   				 		</select>
+					</div>	
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="nome">Turma</label>
+						<select name="turma" id="turma" onChange="filtrar()">
+        				<option th:each="turma : ${turmas}"
+               				 th:value="${turma.codTurma}"
+               				 th:text="${turma.descricao}" />
+   				 </select>
+					</div>	
+				</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-6">
+					<div class="form-group">
+						<label for="nome">Disciplina</label>
+						 <select name="disciplina" id="disciplina">
+        					<option th:each="disciplina : ${disciplinas}"
+               				 th:value="${disciplina.codDisciplina}"
+               				 th:text="${disciplina.disciplinaNome}" 
+               				 th:field="*{disciplina}"/>
+   				 		</select>
+					</div>	
+					</div>
+				</div>
+				<hr />
+			</form>
+			<div id="retorno">
+			
+			</div>
+		</div>
+	</section>
+</body>
+</html>

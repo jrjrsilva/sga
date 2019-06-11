@@ -1,0 +1,194 @@
+<style>
+<!--
+.editavel {
+	padding: 1px;
+}
+-->
+</style>
+
+
+<script>
+$('#notaModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var nome = button.data('nome')
+	  var vc1 = button.data('vc1')
+	  var vc2 = button.data('vc2')
+	  var vf1 = button.data('vf1')
+	  var rec1 = button.data('rec1')
+	  var cons1 = button.data('cons1')
+	  var id = button.data('id')
+	  var disciplina = button.data('disciplina')
+	  var semestre = button.data('semestre')
+	  var turmacod = button.data('turmacod')
+	  var disciplinacod = button.data('disciplinacod')
+
+	  var modal = $(this)
+	
+	  modal.find('.modal-body #nome').val(nome)
+	  modal.find('.modal-body #vc1').val(vc1)
+	  modal.find('.modal-body #vc2').val(vc2)
+	  modal.find('.modal-body #vf1').val(vf1)
+	  modal.find('.modal-body #rec1').val(rec1)
+	  modal.find('.modal-body #cons1').val(cons1)
+	  modal.find('.modal-body #id').val(id)
+	  modal.find('.modal-body #semestre').val(semestre)
+	  modal.find('.modal-body #turmacod').val(turmacod)
+	  modal.find('.modal-body #disciplinacod').val(disciplinacod)
+	  modal.find('.modal-title').text('Nota da disciplina: '+disciplina)
+	});
+
+	
+	
+$('.gravar').click(function(){
+	var urls = window.location.href;
+	$.ajax({
+		type	: "post",
+		url : urls+"/nova1s",
+		data:JSON.stringify ({
+			codNota: $('#id').val(),
+			semestre: $('#semestre').val(),
+			vc1: $('#vc1').val(),
+			vc2: $('#vc2').val(),
+			vf1: $('#vf1').val(),
+			cons1: $('#cons1').val(),
+			rec1: $('#rec1').val(),
+		}),
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(){
+			filtrar();			
+		},
+		error :function(e){
+			console.log(e);
+		}
+	});
+});
+
+</script>
+
+
+
+<hr />
+<div class="table-responsive">
+	<table id="tbl"
+		class="table table-striped table-hover table-bordered table-responsive">
+		<caption class="">::. Primeiro Semestre .:: </caption>
+		<thead>
+			<tr>
+			
+				<th>Aluno</th>
+				<th>VC1</th>
+				<th>VC2</th>
+				<th>VF</th>
+				<th>M Parcial</th>
+				<th>M Final</th>
+				<th>Rec</th>
+				<th>Cons</th>
+				<th>Resultado</th>
+				<th>Situa&ccedil;&atilde;o</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="row : ${page}">
+				<td id="td-nome" th:text="${row.aluno.alunoNome}">Nome</td>
+				<td id="td-vc1" class="editavel" title="vc1" th:text="${row.vC11Sem}">VC 1</td>
+				<td id="td-vc2" class="editavel" title="vc2" th:text="${row.vC21Sem}">VC 2</td>
+				<td id="td-vf1" class="editavel" title="vf1" th:text="${row.vF1Sem}">VF</td>
+				<td th:text="${row.medPar1Sem}">MEDIA PARCIAL</td>
+				<td th:text="${row.medFin1Sem}">Last Name</td>
+				<td id="td-rec1"  class="editavel" title="rec1" th:text="${row.rec1Sem}">Last
+					Name</td>
+				<td id="td-cons1"  class="editavel" title="cons1" th:text="${row.cons1Sem}">Last
+					Name</td>
+				<td th:text="${row.res1Sem}">Last Name</td>
+				<td th:text="${row.resSituacao}">Last Name</td>
+				<td><button type="button" class="btn btn-primary eBtn alterar" 
+							data-toggle="modal" data-target="#notaModal" 							
+							th:attr="data-nome=${row.aluno.alunoNome},data-vc1=${row.vC11Sem},data-vc2=${row.vC21Sem},
+							data-vf1=${row.vF1Sem}, data-rec1=${row.rec1Sem},data-cons1=${row.cons1Sem},data-id=${row.codNota},
+							data-disciplina=${row.disciplina.disciplinaNome},data-semestre=${row.semestre},data-turmacod=${row.turma.codTurma},
+							data-disciplinacod=${row.disciplina.codDisciplina}">+</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div id="tabelaEditavel">
+	
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="notaModal" tabindex="-1" role="dialog" aria-labelledby="notaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="notaModalLabel">Registro de Nota</h5>
+       
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="post" >
+           					<div class="form-group">
+								<label class="col-sm-2 control-label" for="nome">Nome</label>
+								<div class="col-sm-10">
+								<input type="text" class="form-control" name="nome" id="nome" readonly="readonly"/>
+								<input type="hidden" name="id" id="id" />
+								<input type="hidden" name="semestre" id="semestre" />
+								<input type="hidden" name="turmacod" id="turmacod" />
+								<input type="hidden" name="disciplinacod" id="disciplinacod" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vc1">Primeira VC</label>
+								<div class="col-sm-2">
+									<input type="number" class="form-control" step=0.01
+										placeholder="Nota VC 1" name="vc1" id="vc1" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vc2">Segunda VC</label>
+								<div class="col-sm-2">
+									<input type="number" class="form-control" step=0.01
+										placeholder="Nota" name="vc2" id="vc2" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="vf1">Verifica&ccedil;&atilde;o Final</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control"
+										placeholder="Nota VF" name="vf1" id="vf1" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="rec1">Recupera&ccedil;&atilde;o</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control"
+										placeholder="Nota" name="rec1" id="rec1" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="cons">Conselho</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control"
+										placeholder="Nota" name="cons1" id="cons1" />
+								</div>
+							</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-secondary gravar" data-dismiss="modal" >Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

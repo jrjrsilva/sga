@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:sd="http://www.thymeleaf.org/spring-data"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-padrao}">
+<head>
+  <style>
+  p {
+    color: red;
+    margin: 5px;
+    cursor: pointer;
+  }
+  p:hover {
+    background: yellow;
+  }
+  </style>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/stylesheets/lista-vinhos.css}" />
+	<script type="text/javascript">
+
+  $("p").click(function(){
+	  alert("Hello, World.")  
+  });
+ 
+</script>
+<script type="text/javascript">
+
+
+	function carregarTurmas() {
+		$.ajax({
+			type : "GET",
+			url : "/notas/turmas",
+			data : {
+				anoTurma : $('#anoTurma').val(),
+			},
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(dataJson) {
+				$("select[name=turma]").empty();
+				$("select[name=turma]").append(
+						"<option value=''>--Selecione--</option>");
+				$.each(dataJson, function(index, item) {
+					$("select[name=turma]").append(
+							"<option value=" + item.codTurma + ">"
+									+ item.descricao + "</option>");
+				});
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function carregarDisciplinas() {
+		$.ajax({
+			type : "GET",
+			url : "/notas/disciplinas",
+			data : {
+				codTurma : $('#turma').val(),
+				semestre : $('#semestre').val()
+			},
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(dataJson) {
+				$("select[name=disciplina]").empty();
+				$("select[name=disciplina]").append(
+						"<option value=''>--Selecione--</option>");
+				$.each(dataJson, function(index, item) {
+					$("select[name=disciplina]").append(
+							"<option value=" + item.codDisciplina + ">"
+									+ item.disciplinaNome + "</option>");
+				});
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function filtrar() {
+
+		$.ajax({
+			type : "GET",
+			url : "/grades/listagem",
+			contentType : "charset=utf-8",
+			data : {
+				semestre : $('#semestre').val(),
+				turma : $('#turma').val()
+			},
+			success : function(resultado) {
+				$('#retorno').html(resultado);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function limpar() {
+		$('#retorno').html("");
+		$("#btnAdicionar").css("display", "none");
+	}
+	
+	function mostraButton(){
+		$("#btnAdicionar").css("display", "block");
+	}
+	
+	$("#target").click(function() {
+		  alert( "Handler for .click() called." );
+		});
+	
+	$("#other").click(function() {
+		  $("#target").click();
+		});
+	
+	
+	
+</script>
+</head>
+
+<body>
+
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-8">
+						<h1>Listagem de Grades Curriculares</h1>
+						<p>First Paragraph</p>
+<p>Second Paragraph</p>
+<p>Yet one more Paragraph</p>
+ 
+<script>
+$("p").click(function() {
+  $( this ).slideUp();
+});
+</script>
+</div>
+</div>
+
+<div id="target">
+  Click here
+</div>
+
+<div id="other">
+  Trigger the handler
+</div>
+			</div>
+
+			<div class="container-fluid">
+				<div class="alert  alert-success"
+					th:if="${!#strings.isEmpty(mensagem)}">
+					<i class="fa fa-check-circle"></i> <span th:text="${mensagem}">Mensagem
+						sucesso!</span>
+				</div>
+
+				<div class="table-responsive">
+
+					<div class="col-xs-2">
+						<div class="form-group">
+							<span>Ano</span> <select name="anoTurma" id="anoTurma"
+								onChange="carregarTurmas(); limpar()">
+								<option value="">--- Selecione --</option>
+								<option th:each="ano : ${anos}" th:value="${ano}"
+									th:text="${ano}" />
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<span>Semestre</span> <select name="semestre" id="semestre"
+								onChange="limpar()">
+								<option value="">--Selecione--</option>
+								<option value="1">1º Semestre</option>
+								<option value="2">2º Semestre</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<span>Turma</span> <select name="turma" id="turma"
+								onChange="filtrar(); mostraButton();">
+								<option th:each="turma : ${turmas}" th:value="${turma.codTurma}"
+									th:text="${turma.descricao}" />
+							</select>
+						</div>
+					</div>
+
+				</div>
+				<hr />
+				<div class="row" id="btnAdicionar" style="display: none;" >
+					<div class="col-xs-12">
+						<div class="row" >
+							<div class="form-group">
+								<button type="button" class="btn btn-primary eBtn"
+									data-toggle="modal" data-target="#gradeModal"
+									th:attr="data-turmacod=${turma}" >Adicionar Disciplinas a esta turma</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<!-- Modal -->
+				<div class="modal fade" id="gradeModal" tabindex="-1"
+					role="dialog" aria-labelledby="gradeModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="gradeModalLabel">Incluir Disciplina na Grade Curricular</h4>
+
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal" method="post">
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="nome">Nome</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" name="nome" id="nome"
+												readonly="readonly" /> 
+												<input type="text" name="semestrecod" th:text="${semestre}"	id="semestrecod" /> 
+												<input type="text" name="turmacod" th:text="${turma}"	id="turmacod" /> 
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="disciplina">Disciplina</label>
+										<div class="col-sm-8">
+										<select name="disciplina" id="disciplina">
+											<option th:each="disciplina : ${disciplinas}"
+												th:value="${disciplina.codDisciplina}"
+												th:text="${disciplina.disciplinaNome}" />
+											</select>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Fechar</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Salvar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="retorno"></div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nova mensagem</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Destinatário:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Mensagem:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+	<script type="text/javascript">
+		$('#gradeModal').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget)
+			 var nome = button.data('nome')
+			var semestrecod = button.data('semestrecod')
+			var turmacod = button.data('turmacod')
+			
+			console.log('turma codigo ' +  turmacod)
+			
+			var modal = $(this)
+			modal.find('.modal-body #semestrecod').val(semestrecod)
+			modal.find('.modal-body #turmacod').val(turmacod)
+			modal.find('.modal-body #nome').val(nome)
+		});
+		
+		$('#exampleModal').on('show.bs.modal', function (event) {
+			  var button = $(event.relatedTarget) // Botão que acionou o modal
+			  var recipient = button.data('whatever') // Extrai informação dos atributos data-*
+			  // Se necessário, você pode iniciar uma requisição AJAX aqui e, então, fazer a atualização em um callback.
+			  // Atualiza o conteúdo do modal. Nós vamos usar jQuery, aqui. No entanto, você poderia usar uma biblioteca de data binding ou outros métodos.
+			  var modal = $(this)
+			  modal.find('.modal-title').text('Nova mensagem para ' + recipient)
+			  modal.find('.modal-body input').val(recipient)
+			});		
+		
+	</script>
+		
+</body>
+</html>

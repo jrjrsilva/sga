@@ -1,0 +1,66 @@
+<style>
+<!--
+.editavel {
+	padding: 1px;
+}
+-->
+</style>
+
+
+<script>
+$('.gravar').click(function(){
+	$.ajax({
+		type	: "post",
+		url : "/grades/novo",
+		data:JSON.stringify ({
+			semestre : $("#semestre option:selected").val(),
+			anoturma : $("#anoTurma option:selected").val(),
+			turma : $("#turma option:selected").val(),
+			disciplina : $("#disciplina option:selected").val()
+			
+		}),
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(){
+			filtrar();			
+		},
+		error :function(e){
+			console.log(e);
+		}
+	});
+});
+
+</script>
+
+
+
+<hr />
+<div class="table-responsive">
+	<table id="tbl"
+		class="table table-striped table-hover table-bordered table-responsive">
+		<caption class="">
+			
+		</caption>
+		<thead>
+			<tr>
+				<th>Disciplina</th>
+				<th><a type="button" class="btn btn-primary gravar">Incluir Disciplina</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="row : ${page}">
+				<td id="disciplinaNome" title="disciplinaNome"
+					th:text="${row.disciplina.disciplinaNome}"></td>
+				<td><button type="button" class="btn btn-primary remover"
+						data-toggle="modal" data-target="#gradeModal"
+						th:attr="data-nome=${row.codItemturma}">-</button>
+						<a th:href="@{/grades/excluir/{id}(id=${row.codItemturma})}" data-toggle="tooltip" data-placement="bottom" title="Excluir"
+    data-original-title="Excluir" class=""><i class="fa fa-trash"></i></a>
+    <button class="gravar1">
+    <i class="fa fa-trash"></i>
+    </button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
