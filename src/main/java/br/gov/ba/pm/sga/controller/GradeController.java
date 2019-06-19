@@ -19,14 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.gov.ba.pm.sga.model.Disciplina;
 import br.gov.ba.pm.sga.model.Grade;
-import br.gov.ba.pm.sga.model.Nota;
-import br.gov.ba.pm.sga.model.Serie;
 import br.gov.ba.pm.sga.model.Turma;
 import br.gov.ba.pm.sga.service.DisciplinaService;
 import br.gov.ba.pm.sga.service.GradeService;
-import br.gov.ba.pm.sga.service.SerieService;
+import br.gov.ba.pm.sga.service.NotaService;
 import br.gov.ba.pm.sga.service.TurmaService;
-import jnr.ffi.types.sa_family_t;
 
 @Controller
 @RequestMapping("/grades")
@@ -43,6 +40,9 @@ public class GradeController {
 	
 	@Autowired
 	private DisciplinaService disciplinaService;
+	
+	@Autowired
+	private NotaService notaService;
 	
 	@GetMapping("/{id}")
 	public ModelAndView editar(@PathVariable Integer id) {
@@ -98,10 +98,37 @@ public class GradeController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Grade> excluir(@PathVariable("id") Integer id) {
+	@RequestMapping(value="/excluir",  method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Grade> remover(@RequestBody(required=true)Map<String, Object> corpo) {
 		Grade obj = new Grade();
-		obj = service.find(id);
+		/*Disciplina disciplina = new Disciplina();
+		disciplina = disciplinaService.find(Integer.parseInt(corpo.get("disciplinacod").toString()));
+		Turma turma = new Turma();
+		turma = turmaService.find(Integer.parseInt(corpo.get("turmacod").toString()));
+		obj.setAno(Integer.parseInt(corpo.get("anoturma").toString()));
+		obj.setDisciplina(disciplina);
+		obj.setTurma(turma);
+		obj.setSerie(turma.getSerie());*/
+		
+	//	if(verificarNotas(Integer.parseInt(corpo.get("disciplina").toString()),Integer.parseInt(corpo.get("turma").toString()))) {
+			service.delete(Integer.valueOf(corpo.get("gradecod").toString()));
+		//}
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	private boolean verificarNotas(Integer disciplina, Integer turma) {
+		List retorno =  notaService.findByDisciplinaAndTurma(disciplina, turma);
+		if(retorno != null || retorno.size() > 0) {
+			return false;
+		}
+			
+		return true;
+	}
+	
+	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Grade> excluir(@PathVariable("id") String id) {
+		Grade obj = new Grade();
+		obj = service.find(Integer.valueOf(id));
 		service.delete(obj.getCodItemturma());
         return ResponseEntity.ok().body(obj);
     }

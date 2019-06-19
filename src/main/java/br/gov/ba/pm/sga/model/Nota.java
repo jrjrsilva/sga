@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "tnota")
@@ -44,11 +46,10 @@ public class Nota implements Serializable {
 	@Column(name = "Bimestre")
     private String bimestre;
     
-	 @JoinColumn(name = "CodSerie", referencedColumnName = "CodSerie")
-	 @ManyToOne
-	 private Serie serie;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-   
+	@JoinColumn(name = "CodSerie", referencedColumnName = "CodSerie")
+	@ManyToOne
+	private Serie serie;
+	 
     public Serie getSerie() {
 		return serie;
 	}
@@ -58,52 +59,68 @@ public class Nota implements Serializable {
 	}
 
 	/* 1º Semestre */
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VC1_1Sem")
     private Float vC11Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VC2_1Sem")
     private Float vC21Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VF_1Sem")
     private Float vF1Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "MedPar_1Sem")
     private Float medPar1Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "MedFin_1Sem")
     private Float medFin1Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "Cons_1Sem")
     private Float cons1Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "Rec_1Sem")
     private Float rec1Sem;
     
+	
     @Column(name = "Res_1Sem")
     private String res1Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "Ch_1Sem")
     private Integer ch1Sem;
     
     /*2º semestre*/
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VC1_2Sem")
     private Float vC12Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VC2_2Sem")
     private Float vC22Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "VF_2Sem")
     private Float vF2Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "MedPar_2Sem")
     private Float medPar2Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "MedFin_2Sem")
     private Float medFin2Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "Cons_2Sem")
     private Float cons2Sem;
     
+	@Max(value=10)  @Min(value=0)
     @Column(name = "Rec_2Sem")
     private Float rec2Sem;
     

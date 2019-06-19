@@ -65,7 +65,7 @@ function limpar() {
 				<div class="row">
 					<div class="col-xs-8">
 						<h1>
-							Incluir disciplina na turma
+							Grade Curricular - Incluir disciplina na turma
 						</h1>
 					</div>
 				</div>
@@ -130,11 +130,11 @@ function limpar() {
 					</div>	
 				</div>
 				</div>
-				
+				<hr />
 				<div class="row">
 					<div class="col-sm-6">
 					<div class="form-group">
-						<label for="nome">Disciplina</label>
+						<label for="nome">Disciplinas disponíveis</label>
 						 <select name="disciplina" id="disciplina">
         					<option th:each="disciplina : ${disciplinas}"
                				 th:value="${disciplina.codDisciplina}"
@@ -144,10 +144,8 @@ function limpar() {
 					</div>	
 					</div>
 				</div>
-				<hr />
 			</form>
-			<div id="retorno">
-			
+				<div id="retorno">
 			</div>
 		</div>
 	</section>

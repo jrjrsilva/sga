@@ -69,6 +69,10 @@ public class NotaService {
 		 return repo.findByAlunoAndDisciplinaAndTurma(aluno,disciplina,turma);
 	}
 	
+	public List<Nota> findByDisciplinaAndTurma(Integer disciplina,Integer turma){	 
+		 return repo.findByDisciplinaAndTurma(disciplina,turma);
+	}
+	
 	
 	public Page<Nota> findPage(Integer page, Integer linesPerPage,String orderBy, String direction){
 		 PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction),

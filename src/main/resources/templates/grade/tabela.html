@@ -1,3 +1,5 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <style>
 <!--
 .editavel {
@@ -8,6 +10,26 @@
 
 
 <script>
+
+$('#removerModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var nome = button.data('nome')
+	  var disciplina = button.data('disciplina')
+	  var semestre = button.data('semestre')
+	  var turmacod = button.data('turmacod')
+	  var disciplinacod = button.data('disciplinacod')
+	  var gradecod = button.data('gradecod')
+
+	  var modal = $(this)
+	
+	  modal.find('.modal-body #nome').val(nome)
+	  modal.find('.modal-body #semestre').val(semestre)
+	  modal.find('.modal-body #turmacod').val(turmacod)
+	  modal.find('.modal-body #disciplinacod').val(disciplinacod)
+	  modal.find('.modal-title').text('Removendo disciplina')
+	  modal.find('.modal-body #gradecod').val(gradecod)
+	});
+
 $('.gravar').click(function(){
 	$.ajax({
 		type	: "post",
@@ -22,7 +44,7 @@ $('.gravar').click(function(){
 		dataType : "json",
 		contentType : "application/json; charset=utf-8",
 		success : function(){
-			filtrar();			
+			filtrar();		
 		},
 		error :function(e){
 			console.log(e);
@@ -30,37 +52,117 @@ $('.gravar').click(function(){
 	});
 });
 
+
+$('.remover').on('click', function (event) {
+	$.ajax({
+		type	: "post",
+		url : "/grades/excluir",
+		data:JSON.stringify ({
+			turmacod : $("#turmacod").val(),
+			disciplinacod : $("#disciplinacod").val(),
+			gradecod : $("#gradecod").val()
+			
+		}),
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(){
+			//filtro();
+			//console.log(turmacod);
+			console.log('OK');
+		},
+		error :function(e){
+			console.log(e);
+		}
+	}); 
+});
+
+
+function filtro() {
+
+	$.ajax({
+		type : "GET",
+		url : "/grades/listagem",
+		contentType : "charset=utf-8",
+		data : {
+			semestre : $('#semestre').val(),
+			turma : $('#turma').val()
+		},
+		success : function(resultado) {
+			$('#retorno').html("");
+		//	$('#retorno').html(resultado);
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+
+
+
+
 </script>
-
-
-
-<hr />
+<a type="button" class="btn btn-primary gravar">Incluir Disciplina</a>
 <div class="table-responsive">
 	<table id="tbl"
 		class="table table-striped table-hover table-bordered table-responsive">
-		<caption class="">
-			
-		</caption>
+		<caption class=""></caption>
 		<thead>
 			<tr>
 				<th>Disciplina</th>
-				<th><a type="button" class="btn btn-primary gravar">Incluir Disciplina</a></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="row : ${page}">
 				<td id="disciplinaNome" title="disciplinaNome"
-					th:text="${row.disciplina.disciplinaNome}"></td>
-				<td><button type="button" class="btn btn-primary remover"
-						data-toggle="modal" data-target="#gradeModal"
-						th:attr="data-nome=${row.codItemturma}">-</button>
-						<a th:href="@{/grades/excluir/{id}(id=${row.codItemturma})}" data-toggle="tooltip" data-placement="bottom" title="Excluir"
-    data-original-title="Excluir" class=""><i class="fa fa-trash"></i></a>
-    <button class="gravar1">
-    <i class="fa fa-trash"></i>
-    </button></td>
+					th:text="${row.disciplina.disciplinaNome}">
+					</td>
+				<td>
+				<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#removerModal"
+						th:attr="data-gradecod=${row.codItemturma},data-disciplinacod=${row.disciplina.codDisciplina},
+						data-turmacod=${row.turma.codTurma},
+							data-nome=${row.disciplina.disciplinaNome}"><i class="fa fa-trash"></i></button>		
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="removerModal" tabindex="-1" role="dialog"
+	aria-labelledby="removerModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h5 class="modal-title" id="removerModalLabel">Remover
+					Disciplina</h5>
+
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" method="post">
+					<div class="form-group">
+						<label class="col-sm-12 control-label" for="nome"></label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="nome" id="nome"
+								readonly="readonly" />
+							<input type="hidden" name="semestre" id="semestre" /> <input
+								type="hidden" name="turmacod" id="turmacod" /> <input
+								type="hidden" name="disciplinacod" id="disciplinacod" />
+								 <input	type="hidden" name="gradecod" id="gradecod" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+				<button type="button" class="btn btn-secondary remover">Confirmar</button>
+			</div>
+		</div>
+	</div>
+</div>

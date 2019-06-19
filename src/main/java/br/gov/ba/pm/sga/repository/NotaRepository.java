@@ -30,5 +30,10 @@ public interface NotaRepository extends JpaRepository<Nota, Integer> {
 			@Param("disciplina") Integer disciplina,
 			@Param("semestre") String semestre);
 
+	@Transactional(readOnly=true)
+	@Query("select n from Nota n where n.disciplina.codDisciplina = :disciplina and n.turma.codTurma = :turma")	
+	List<Nota> findByDisciplinaAndTurma(@Param("disciplina") Integer disciplina, @Param("turma") Integer turma);
+	
+
 	
 }

@@ -5,6 +5,57 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/layout-padrao}">
 <head>
+
+<script type="text/javascript">
+
+function carregarTurmas(){
+	$.ajax({
+		type	: "GET",
+		url : "/notas/turmas",
+		data	: {
+			anoTurma: $('#anoTurma').val(),
+		},
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		success : function(dataJson){
+			$("select[name=turma]").empty();
+			$("select[name=turma]").append("<option value=''>--Selecione--</option>");
+			$.each(dataJson, function(index, item){
+				$("select[name=turma]").append(
+						"<option value=" + item.codTurma + ">" + item.descricao + "</option>");
+			});
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+}
+
+function filtrar() {
+
+	$.ajax({
+		type : "GET",
+		url : "/grades/listagem",
+		contentType : "charset=utf-8",
+		data : {
+			semestre : $('#semestre').val(),
+			turma : $('#turma').val()
+		},
+		success : function(resultado) {
+			$('#retorno').html(resultado);
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+
+
+function limpar() {
+	$('#retorno').html("");
+}
+
+</script>
 </head>
 
 <body>
@@ -14,18 +65,8 @@
 				<div class="row">
 					<div class="col-xs-8">
 						<h1>
-							Aluno
+							Grade Curricular - Incluir disciplina na turma
 						</h1>
-					</div>
-
-					<div class="col-xs-4">
-						<div class="aw-page-header-controls">
-							<a class="btn btn-primary" th:href="@{/aluno/listar}">
-								<i class="fa fa-table"></i>
-
-								<span class="hidden-xs hidden-sm">Listagem</span>
-							</a>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -34,7 +75,7 @@
 		<div class="container-fluid">
 
 			<form method="POST" class="form-vertical  js-form-loading"
-				th:object="${aluno}" th:action="@{/aluno/novo}">
+				th:object="${grade}" th:action="@{/grades/novo}">
 				<div class="alert  alert-danger  alert-dismissible" role="alert"
 					th:if="${#fields.hasAnyErrors()}">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -54,165 +95,58 @@
 
 					<span th:text="${mensagem}">Mensagem sucesso!</span>
 				</div>
-				
-				<input type="hidden" th:field="*{id}"/>
 				<div class="row">
-					<div class="col-sm-6 ">
-						<label for="nome">Nome</label>
-						<input id="nome" type="text" class="form-control" 
-						th:field="*{nome}" readonly="readonly"/>
-					</div>
-
-		
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="nomeGuerra">Nome de Guerra</label>
-							<input id="nomeGuerra" type="text" class="form-control" 
-									th:field="*{nomeGuerra}"/>
-				
-						</div>
-					</div>
-
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="matricula">Matrícula</label>
-							<input id="matricula" type="text" class="form-control" 
-								th:field="*{matricula}" readonly="readonly"/>
-						</div>
-					</div>
-					
-					<div class="col-sm-1">
-						<div class="form-group">
-							<label for="numero">Número</label>
-							<input id="numero" type="text" class="form-control" 
-							th:field="*{numero}" readonly="readonly"/>
-						</div>
-					</div>
-
-					
-					
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="turma">Turma</label>
-							<input id="turma" type="text" class="form-control" 
-								th:field="*{turma}" readonly="readonly"/>
-						</div>
-					</div>
-					
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="cpf">CPF</label>
-							<input id="cpf" type="text" class="form-control" 
-								th:field="*{cpf}" readonly="readonly"/>
-						</div>
-					</div>
-					
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="gruposanguineo">Grupo Sanguineo</label>
-							<input id="gruposanguineo" type="text" class="form-control" 
-								th:field="*{gruposanguineo}" readonly="readonly"/>
-						</div>
-					</div>
-					
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="fatorrh">Fator RH</label>
-							<input id="fatorrh" type="text" class="form-control" 
-								th:field="*{fatorrh}" readonly="readonly"/>
-						</div>
-					</div>
-					
-				
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label for="nascimento">Data Nascimento</label>
-							<input id="nascimento" type="text" class="form-control" 
-								th:field="*{nascimento}" 
-								th:value="${#dates.format(aluno.nascimento, 'dd-MMM-yyyy')}"
-								readonly="readonly"/>
-						</div>
-					</div>
-					
-					
-					<div class="col-sm-8">
-						<div class="form-group">
-							<label for="endereco">Endereço</label>
-							<input id="endereco" type="text" class="form-control"
-								th:field="*{endereco}" />
-						</div>
-					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
-							<label for="email">E-mail</label>
-							<input id="email" type="text" class="form-control"
-									th:field="*{email}" />
-						</div>
-					</div>
-				
-				<div class="col-sm-1">
-						<div class="form-group">
-							<label for="ddd">DDD</label>
-							<input id="ddd" type="text" class="form-control"
-							th:field="*{ddd}" maxlength="2"/>
-						</div>
-					</div>
-				<div class="col-sm-2">
-						<div class="form-group">
-							<label for="telefone">Telefone</label>
-							<input id="telefone" type="text" class="form-control"
-							th:field="*{telefone}" maxlength="9"/>
-						</div>
+					<div class="form-group">
+						<label for="nome">Ano</label>
+						 <select name="anoTurma" id="anoTurma" onChange="carregarTurmas(); limpar()">
+        				<option value="">--- Selecione --</option>
+        				<option th:each="ano : ${anos}"
+               				 th:value="${ano}"
+               				 th:text="${ano}" />
+   				 		</select>
+					</div>	
+				</div>
+			
+					<div class="col-sm-4">
+					<div class="form-group">
+						<label for="nome">Semestre</label>
+						 <select name="semestre" id="semestre" onChange="limpar()">
+        					<option value="">--Selecione--</option>
+        					<option value="1">1º Semestre</option>
+        					<option value="2">2º Semestre</option>
+   				 		</select>
+					</div>	
 				</div>
 				
-				
-				
-				<div class="col-sm-2">
-						<div class="form-group">
-							
-						</div>
-				</div>
-				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
-						<button class="btn  btn-primary" type="submit">Salvar</button>
+						<label for="nome">Turma</label>
+						<select name="turma" id="turma" onChange="filtrar()">
+        				<option th:each="turma : ${turmas}"
+               				 th:value="${turma.codTurma}"
+               				 th:text="${turma.descricao}" />
+   				 </select>
+					</div>	
+				</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-sm-6">
+					<div class="form-group">
+						<label for="nome">Disciplinas disponíveis</label>
+						 <select name="disciplina" id="disciplina">
+        					<option th:each="disciplina : ${disciplinas}"
+               				 th:value="${disciplina.codDisciplina}"
+               				 th:text="${disciplina.disciplinaNome}" 
+               				 th:field="*{disciplina}"/>
+   				 		</select>
+					</div>	
 					</div>
 				</div>
-				
-				<div class="col-sm-4">
-						<div class="form-group">
-							<table  width="350" border="2px" >
-							<caption>Participa dos Grupos</caption>
-							
-					
-						<div class="col-sm-4">
-							<a class="btn btn-success" th:href="@{/aluno/grupos/{id}(id=${aluno.id})}">
-								<i class="fa fa-table"></i>
-
-								<span class="hidden-xs hidden-sm">Atribuir</span>
-							</a>
-						</div>
-				
-							<thead>
-						<tr>
- 						    <td width="50" height="20" >Serviço</td>
-						    <td width="10" align="center">Grupo</td>
-					    </tr>
-
-
-							<tr th:each="grpsrv : ${grupos}">
-							<td th:text="${grpsrv.nome}">
-							</td>
-							<td th:text="${grpsrv.letra}" align="center">
-							</td>
-							</tr>
-							</table>
-						</div>
-					</div>
-				</div>
-				
-			
 			</form>
+				<div id="retorno">
+			</div>
 		</div>
 	</section>
 </body>

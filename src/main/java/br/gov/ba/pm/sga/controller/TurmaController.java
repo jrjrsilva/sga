@@ -1,29 +1,16 @@
 package br.gov.ba.pm.sga.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
-import br.gov.ba.pm.sga.model.Aluno;
 import br.gov.ba.pm.sga.model.Turma;
-import br.gov.ba.pm.sga.service.GrupoServicoService;
+import br.gov.ba.pm.sga.service.MatriculaNovaService;
 import br.gov.ba.pm.sga.service.TurmaService;
 
 @Controller
@@ -36,6 +23,8 @@ public class TurmaController {
 	@Autowired
 	private TurmaService service;
 	
+	@Autowired
+	private MatriculaNovaService mnService;
 			
 	@GetMapping("/listar")
 	public ModelAndView listar() {
@@ -58,6 +47,14 @@ public class TurmaController {
 	@GetMapping("/novo/{id}")
 	public ModelAndView editar(@PathVariable Integer id) {
 		return novo(service.find(id));
+	}
+	
+	@GetMapping("/detalhe/{id}")
+	public ModelAndView detalhe(@PathVariable Integer id) {
+		ModelAndView modelAndView = new ModelAndView("turma/detalhe");
+		modelAndView.addObject("turma",service.find(id));
+		modelAndView.addObject("matriculados",mnService.findByTurma(id));
+		return modelAndView;
 	}
 	
 	/*@PostMapping("/turma")

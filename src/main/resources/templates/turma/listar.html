@@ -47,7 +47,7 @@
 		  <td th:text="${row.descricao}">Descricao</td>
 		  <td th:text="${row.turmaD}">Sigla</td>
 		  <td th:text="${row.turma}"></td>
-		  <td><a th:href="@{/turmas/novo/{id}(id=${row.codTurma})}">edit</a></td>
+		  <td><a th:href="@{/turmas/detalhe/{id}(id=${row.codTurma})}">edit</a></td>
 		</tr>
 	</tbody>
 </table>
